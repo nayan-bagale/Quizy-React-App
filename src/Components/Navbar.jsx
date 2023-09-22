@@ -59,7 +59,7 @@ const Navbar = () => {
                 exit={{ opacity: 0 }}
               ></motion.div>
               <motion.div
-                className=" z-10 px-4 md:shadow-xl fixed flex flex-col justify-between gap-4 list-none top-0 py-6 max-w-sm w-full min-h-screen bg-slate-800"
+                className=" z-20 px-4 md:shadow-xl fixed flex flex-col justify-between gap-4 list-none top-0 py-6 max-w-sm w-full min-h-screen bg-slate-800"
                 ref={ref}
                 variants={navAnimate}
                 initial="initial"
