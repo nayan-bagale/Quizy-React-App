@@ -108,7 +108,7 @@ const AddQuestions = ({ setQuestions, edit }) => {
 
   return (
     <>
-      <div className=" flex flex-col gap-4 min-w-[10rem] md:w-[30rem] border p-4 rounded text-white">
+      <div className=" flex flex-col gap-4 bg-slate-800 border-slate-700 w-[80vw] md:w-[40vw] border p-4 rounded text-white">
         <div className=" flex text-base md:text-xl gap-2">
           <label htmlFor="question">Question: </label>
           <input

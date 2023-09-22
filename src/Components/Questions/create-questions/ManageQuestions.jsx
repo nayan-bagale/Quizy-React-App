@@ -27,11 +27,6 @@ const ManageQuestions = () => {
     setEdit(item.data);
   };
 
-  const store = () => {
-    localStorage.setItem("prev", JSON.stringify(questions));
-    console.log("Done");
-  };
-
   return (
     <>
       <>
@@ -39,7 +34,7 @@ const ManageQuestions = () => {
           return (
             <div
               key={item.key}
-              className=" break-words relative flex flex-col gap-2 text-white border rounded p-4 w-[80vw] md:w-[40vw]"
+              className=" break-words relative flex flex-col gap-2 text-white border rounded border-zinc-700 p-4 bg-zinc-800 w-[80vw] md:w-[40vw]"
             >
               <h1>Q{item.key}.</h1>
               <h1>{item.data.question}</h1>
@@ -68,12 +63,11 @@ const ManageQuestions = () => {
         })}
       </>
 
-      <button
+      {/* <button
         className=" fixed right-[10rem] p-1 border rounded-full text-3xl text-white hover:text-black hover:bg-white"
-        onClick={store}
       >
         <AiOutlineSave />
-      </button>
+      </button> */}
 
       <AddQuestions setQuestions={setQuestions} edit={edit} />
     </>
