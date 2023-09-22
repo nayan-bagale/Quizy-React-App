@@ -20,9 +20,9 @@ const MainApp = () => {
   );
 };
 
-const PrivatePage = () => {
+// const PrivatePage = () => {
   
-}
+// }
 
 function App() {
   const { user } = UserAuth();

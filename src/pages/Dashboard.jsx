@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <main>{user}</main>
+      <main></main>
     </>
   );
 };

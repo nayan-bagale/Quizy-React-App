@@ -8,7 +8,6 @@ import { UserAuth } from "../ContextApi/AuthContext";
 const Navbar = () => {
 
   const { user, logOut } = UserAuth();
-  console.log(user)
 
   const [isopen, setIsopen] = useState(false);
   const ref = useRef(null);
