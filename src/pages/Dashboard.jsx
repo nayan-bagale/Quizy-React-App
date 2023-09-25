@@ -18,20 +18,16 @@ const Dashboard = () => {
 
   const userCollectionRef = collection(db, "user");
 
-  
+  const createUser = async () => {
+    const bool = accounts.filter((user) => user.email === userObj.email);
+    if (bool.length > 0) {
+      alert("already have account");
+      return;
+    }
+    await addDoc(userCollectionRef, { ...userObj });
+  };
 
   useEffect(() => {
-
-    const createUser = async () => {
-      const bool = accounts.filter((user) => user.email === userObj.email);
-      if (bool.length > 0) {
-        alert("already have account");
-        return;
-      }
-      await addDoc(userCollectionRef, { ...userObj });
-    };
-
-
     const getData = async() => {
       const data = await getDocs(userCollectionRef);
       setAccounts(data.docs.map((doc) => ({...doc.data(), id: doc.id,})));
@@ -41,16 +37,16 @@ const Dashboard = () => {
   },[])
 
   return (
-    <main className=" flex flex-col items-center justify-center text-white text-3xl">
+    <main className=" flex flex-col items-center gap-4 justify-center text-white text-3xl">
       <div className=" flex gap-2 text-xl">
-        {/* <button className=" bg-slate-400 p-2" onClick={createUser}>
-          Submit
-        </button> */}
+        <button className=" bg-slate-400 p-2" onClick={createUser}>
+          Add Account
+        </button>
       </div>
-      <div>
+      <div className=" flex flex-col gap-2">
         {accounts.map((user, i) => (
           <div key={i}>
-            {user.displayName} {user.email} <br /> {user.uid}
+            {user.displayName} {user.email}
           </div>
         ))}
       </div>

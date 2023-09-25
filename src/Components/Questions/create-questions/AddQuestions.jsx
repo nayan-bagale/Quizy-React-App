@@ -42,7 +42,7 @@ const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
 
   const handleoptionsAdd = () => {
     if (form.options.length >= 4) {
-      console.log("lmit");
+      console.log("limit");
       return;
     }
 

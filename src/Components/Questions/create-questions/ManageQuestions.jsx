@@ -6,6 +6,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { UserAuth } from "../../../ContextApi/AuthContext";
 import { v4 as uuidv4 } from "uuid";
+import toast, { Toaster } from "react-hot-toast";
 
 const ManageQuestions = () => {
 
@@ -37,7 +38,7 @@ const ManageQuestions = () => {
 
   const saveQuestionDB = async() => {
     if(questions < 1) {
-      alert("At least two questions required!")
+      toast.error("At least two questions required!");
       return
     }
 
@@ -48,7 +49,11 @@ const ManageQuestions = () => {
       qid: uuidv4(),
     };
 
-    await addDoc(userCollectionRef, { ...questionDataDB });
+    toast.promise(addDoc(userCollectionRef, { ...questionDataDB }), {
+      loading: "Saving...",
+      success: <b>Questions saved!</b>,
+      error: <b>Could not save.</b>,
+    });
     
   }
 
@@ -93,6 +98,7 @@ const ManageQuestions = () => {
         edit={edit}
         saveQuestionDB={saveQuestionDB}
       />
+      <Toaster/>
     </>
   );
 };
