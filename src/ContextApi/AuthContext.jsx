@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import { Navigate, redirect } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -19,6 +20,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logOut = () => {
     signOut(auth);
+    redirect('/');
   };
 
   useEffect(() => {

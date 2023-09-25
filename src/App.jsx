@@ -1,33 +1,50 @@
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
-import Navbar from "./Components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Questions from "./pages/Questions";
-import { useState } from "react";
+import NotFound from "./pages/NotFound";
 import { UserAuth } from "./ContextApi/AuthContext";
-import { Route, Routes } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
-const MainApp = () => {
-  return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/questions" element={<Questions />} />
-      </Routes>
-    </>
-  );
-};
-
-// const PrivatePage = () => {
-  
-// }
+import Layout from "./pages/Layout";
+import Private from "./pages/private/Private";
 
 function App() {
   const { user } = UserAuth();
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: user ? <Layout /> : <Auth />,
+      errorElement: <NotFound />,
+      children: [
+        {
+          path: "",
+          element: <Dashboard />,
+        },
+        {
+          path: "questions",
+          element: <Questions />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
+        },
+      ],
+    },
+    {
+      path:"/form/:id",
+      element: <Private/>
+    }
+  ]);
 
-  return <>{!user ? <Auth /> : <MainApp />}</>;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

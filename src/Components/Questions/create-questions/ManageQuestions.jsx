@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import AddQuestions from "./AddQuestions";
-// import { setData } from "@/util/localstorage";
 import { AiOutlineDelete, AiOutlineSave } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
+import { UserAuth } from "../../../ContextApi/AuthContext";
+import { v4 as uuidv4 } from "uuid";
 
 const ManageQuestions = () => {
+
+  const { user } = UserAuth();
+
   const [questions, setQuestions] = useState([]);
   const [edit, setEdit] = useState({
     question: "",
@@ -26,6 +32,25 @@ const ManageQuestions = () => {
     handleDeleteQ(item.key);
     setEdit(item.data);
   };
+
+  const userCollectionRef = collection(db, "questions");
+
+  const saveQuestionDB = async() => {
+    if(questions < 1) {
+      alert("At least two questions required!")
+      return
+    }
+
+    const questionDataDB = {
+      uid: user.uid,
+      timestamp: Date.now(),
+      data: questions,
+      qid: uuidv4(),
+    };
+
+    await addDoc(userCollectionRef, { ...questionDataDB });
+    
+  }
 
   return (
     <>
@@ -63,13 +88,11 @@ const ManageQuestions = () => {
         })}
       </>
 
-      {/* <button
-        className=" fixed right-[10rem] p-1 border rounded-full text-3xl text-white hover:text-black hover:bg-white"
-      >
-        <AiOutlineSave />
-      </button> */}
-
-      <AddQuestions setQuestions={setQuestions} edit={edit} />
+      <AddQuestions
+        setQuestions={setQuestions}
+        edit={edit}
+        saveQuestionDB={saveQuestionDB}
+      />
     </>
   );
 };

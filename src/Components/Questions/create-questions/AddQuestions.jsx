@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineCheck } from "react-icons/ai";
 
-const AddQuestions = ({ setQuestions, edit }) => {
+const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
   const [form, setForm] = useState(edit);
 
   // {
@@ -190,6 +190,12 @@ const AddQuestions = ({ setQuestions, edit }) => {
           </div>
         </div>
       </div>
+      <button
+        className=" w-[80vw] md:w-[40vw] rounded-md text-center bg-green-700 hover:bg-green-800 text-white p-2"
+        onClick={saveQuestionDB}
+      >
+        Save
+      </button>
     </>
   );
 };

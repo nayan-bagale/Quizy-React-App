@@ -25,12 +25,12 @@ const Questions = () => {
               </button>
             </div>
             <div className="absolute right-4 gap-4 hidden md:flex">
-              { Menu && (<button className="  p-1 border rounded-full text-3xl hover:text-black hover:bg-white">
+              {/* { Menu && (<button className="  p-1 border rounded-full text-3xl hover:text-black hover:bg-white">
                 <AiOutlineSave />
-              </button>)}
-              <button className="  p-1 border rounded-full text-3xl hover:text-black hover:bg-white">
+              </button>)} */}
+              {/* <button className="  p-1 border rounded-full text-3xl hover:text-black hover:bg-white">
                 <AiOutlineShareAlt />
-              </button>
+              </button> */}
             </div>
           </nav>
           <div className=" flex flex-col w-full gap-4 md:rounded-xl justify-center p-8 items-center">
@@ -38,7 +38,6 @@ const Questions = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

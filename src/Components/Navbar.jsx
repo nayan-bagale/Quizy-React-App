@@ -91,7 +91,7 @@ const Navbar = () => {
                 <div className=" flex flex-col gap-2">
                   <Link
                     className="p-2 px-4 rounded-xl hover:shadow hover:bg-slate-600"
-                    to={"/dashboard"}
+                    to={"/"}
                     onClick={() => setIsopen(false)}
                   >
                     Dashboard
