@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { useParams } from "react-router-dom";
 
 import { db } from "../../firebase/firebase";
@@ -23,34 +22,44 @@ const Private = () => {
     getData();
   }, []);
 
+  console.log(question)
+
 
   return (
     <main className=" text-2xl flex flex-col items-center justify-center gap-4 p-6">
-        {question &&
-          question.map((doc) => {
-            return doc.data.map((item, i) => {
-              return (
-                <div key={item.key} className=" text-white w-[60vw] md:w-[40vw] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4">
-                  <div>
-                    <span>Q{i + 1}) </span>
-                    {item.data.question}
-                  </div>
-                  <div className=" flex flex-col gap-2">
-                    {item.data.options.map((option) => {
-                      return (
-                        <li
-                          key={option.key}
-                          className=" list-decimal p-1 rounded hover:bg-zinc-900 "
-                        >
-                          {option.value}
-                        </li>
-                      );
-                    })}
-                  </div>
+      {question.length === 0 ? (
+        <div className=" flex items-center justify-center h-screen">
+          <div className=" text-3xl text-white ">Not Found</div>
+        </div>
+      ) : (
+        question.map((doc) => {
+          return doc.data.map((item, i) => {
+            return (
+              <div
+                key={item.key}
+                className=" text-white w-[60vw] md:w-[40vw] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4"
+              >
+                <div>
+                  <span>Q{i + 1}) </span>
+                  {item.data.question}
                 </div>
-              );
-            });
-          })}
+                <div className=" flex flex-col gap-2">
+                  {item.data.options.map((option) => {
+                    return (
+                      <li
+                        key={option.key}
+                        className=" list-decimal p-1 rounded hover:bg-zinc-900 "
+                      >
+                        {option.value}
+                      </li>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          });
+        })
+      )}
     </main>
   );
 };
