@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineCheck } from "react-icons/ai";
 
-const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
+const AddQuestions = ({
+  setQuestions,
+  edit,
+  saveQuestionDB,
+  isValid,
+}) => {
   const [form, setForm] = useState(edit);
+
+  // const isValid = totalQuestions > 0;
 
   // {
   //   question: "",
@@ -92,7 +99,13 @@ const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
   const handleAddQuestion = () => {
     if (!Validation()) return;
     setQuestions((prev) => {
-      return [...prev, { key: prev.length + 1, data: form }];
+      return {
+        ...prev,
+        question: [
+          ...prev.question,
+          { key: prev.question.length + 1, data: form },
+        ],
+      };
     });
     handleDeleteQuestion();
   };
@@ -109,10 +122,10 @@ const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
   return (
     <>
       <div className=" flex flex-col gap-4 bg-slate-800 border-slate-700 w-[80vw] md:w-[40vw] border p-4 rounded text-white">
-        <div className=" flex text-base md:text-xl gap-2">
+        <div className=" flex flex-col text-base md:text-xl gap-2">
           <label htmlFor="question">Question: </label>
           <input
-            className=" bg-transparent border rounded"
+            className=" bg-transparent border rounded md:max-w-[80%]"
             type="text"
             name="question"
             placeholder=" ex: Who is IronMan ?"
@@ -150,7 +163,7 @@ const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
             })}
           </>
           <button
-            className=" text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg text-sm w-fit p-2.5 text-center ml-4 mt-4 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 "
+            className=" text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 rounded-lg text-sm w-fit p-2.5 text-center ml-4 mt-4 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 "
             onClick={handleoptionsAdd}
           >
             <AiOutlinePlus />
@@ -191,10 +204,13 @@ const AddQuestions = ({ setQuestions, edit, saveQuestionDB }) => {
         </div>
       </div>
       <button
-        className=" w-[80vw] md:w-[40vw] rounded-md text-center bg-green-700 hover:bg-green-800 text-white p-2"
+        className={` shadow w-[80vw] md:w-[40vw] rounded-md text-center hover:bg-green-800 text-white p-2 ${
+          isValid ? "bg-green-700" : "bg-green-800 cursor-not-allowed"
+        } `}
+        disabled={!isValid}
         onClick={saveQuestionDB}
       >
-        Save
+        Preview & Save
       </button>
     </>
   );

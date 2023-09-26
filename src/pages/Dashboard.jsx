@@ -40,7 +40,7 @@ const Dashboard = () => {
     <main className=" flex flex-col items-center gap-4 justify-center text-white text-3xl">
       <div className=" flex gap-2 text-xl">
         <button className=" bg-slate-400 p-2" onClick={createUser}>
-          Add Account
+          Add Account to database
         </button>
       </div>
       <div className=" flex flex-col gap-2">

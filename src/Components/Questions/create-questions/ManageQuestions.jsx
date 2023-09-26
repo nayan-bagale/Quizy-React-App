@@ -9,10 +9,13 @@ import { v4 as uuidv4 } from "uuid";
 import toast, { Toaster } from "react-hot-toast";
 
 const ManageQuestions = () => {
-
   const { user } = UserAuth();
 
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState({
+    title: "Quizz",
+    question: [],
+  });
+
   const [edit, setEdit] = useState({
     question: "",
     options: [
@@ -23,10 +26,10 @@ const ManageQuestions = () => {
   });
 
   const handleDeleteQ = (key) => {
-    const updatedQ = questions.filter((item) => {
+    const updatedQ = questions.question.filter((item) => {
       return item.key !== key;
     });
-    setQuestions(updatedQ);
+    setQuestions(prev => ({ ...prev, question:updatedQ }));
   };
 
   const handleEditQ = (item) => {
@@ -34,12 +37,18 @@ const ManageQuestions = () => {
     setEdit(item.data);
   };
 
+  const handleTitle = (e) => {
+    setQuestions(prev => {
+      return { ...prev, title: e.target.value };
+    })
+  }
+
   const userCollectionRef = collection(db, "questions");
 
-  const saveQuestionDB = async() => {
-    if(questions < 1) {
+  const saveQuestionDB = async () => {
+    if (questions.question < 1) {
       toast.error("At least two questions required!");
-      return
+      return;
     }
 
     const questionDataDB = {
@@ -54,17 +63,26 @@ const ManageQuestions = () => {
       success: <b>Questions saved!</b>,
       error: <b>Could not save.</b>,
     });
-    
-  }
+  };
 
   return (
     <>
+      <div className=" shadow w-[80vw] md:w-[40vw] flex flex-col items-center text-xl text-white border rounded bg-slate-800 border-slate-700 p-2">
+        <label htmlFor="title">Title</label>
+        <input
+          className=" bg-transparent border rounded px-1 md:max-w-[80%] "
+          type="text"
+          name="title"
+          placeholder=" Title"
+          onChange={handleTitle}
+        />
+      </div>
       <>
-        {questions.map((item) => {
+        {questions.question.map((item) => {
           return (
             <div
               key={item.key}
-              className=" break-words relative flex flex-col gap-2 text-white border rounded border-zinc-700 p-4 bg-zinc-800 w-[80vw] md:w-[40vw]"
+              className=" shadow break-words relative flex flex-col gap-2 text-white border rounded border-zinc-700 p-4 bg-zinc-800 w-[80vw] md:w-[40vw]"
             >
               <h1>Q{item.key}.</h1>
               <h1>{item.data.question}</h1>
@@ -95,10 +113,11 @@ const ManageQuestions = () => {
 
       <AddQuestions
         setQuestions={setQuestions}
+        isValid={questions.question.length > 0 && questions.title.length > 3 }
         edit={edit}
         saveQuestionDB={saveQuestionDB}
       />
-      <Toaster/>
+      <Toaster />
     </>
   );
 };
