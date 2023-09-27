@@ -22,9 +22,6 @@ const Private = () => {
     getData();
   }, []);
 
-  console.log(question)
-
-
   return (
     <main className=" text-2xl flex flex-col items-center justify-center gap-4 p-6">
       {question.length === 0 ? (
@@ -33,31 +30,36 @@ const Private = () => {
         </div>
       ) : (
         question.map((doc) => {
-          return doc.data.map((item, i) => {
-            return (
-              <div
-                key={item.key}
-                className=" text-white w-[60vw] md:w-[40vw] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4"
-              >
-                <div>
-                  <span>Q{i + 1}) </span>
-                  {item.data.question}
-                </div>
-                <div className=" flex flex-col gap-2">
-                  {item.data.options.map((option) => {
-                    return (
-                      <li
-                        key={option.key}
-                        className=" list-decimal p-1 rounded hover:bg-zinc-900 "
-                      >
-                        {option.value}
-                      </li>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          });
+          return (
+            <>
+              <h1 className=" text-2xl text-white">{doc.data.title}</h1>
+              {doc.data.question.map((item, i) => {
+                return (
+                  <div
+                    key={item.key}
+                    className=" text-white w-[60vw] md:w-[40vw] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4"
+                  >
+                    <div>
+                      <span>Q{i + 1}) </span>
+                      {item.data.question}
+                    </div>
+                    <div className=" flex flex-col gap-2">
+                      {item.data.options.map((option) => {
+                        return (
+                          <li
+                            key={option.key}
+                            className=" list-decimal p-1 rounded hover:bg-zinc-900 "
+                          >
+                            {option.value}
+                          </li>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          );
         })
       )}
     </main>

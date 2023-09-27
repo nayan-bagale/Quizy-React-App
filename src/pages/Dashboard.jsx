@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../Components/Navbar";
 import { UserAuth } from "../ContextApi/AuthContext";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
@@ -19,12 +18,13 @@ const Dashboard = () => {
   const userCollectionRef = collection(db, "user");
 
   const createUser = async () => {
-    const bool = accounts.filter((user) => user.email === userObj.email);
+    const bool = accounts.filter((doc) => doc.email === userObj.email);
     if (bool.length > 0) {
-      alert("already have account");
-      return;
+      console.log("already have account");
+      return 0;
+    }else{
+      await addDoc(userCollectionRef, { ...userObj });
     }
-    await addDoc(userCollectionRef, { ...userObj });
   };
 
   useEffect(() => {

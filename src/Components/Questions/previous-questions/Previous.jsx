@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { UserAuth } from "../../../ContextApi/AuthContext";
 import { db } from "../../../firebase/firebase";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
@@ -6,10 +6,17 @@ import { RWebShare } from "react-web-share";
 import { AiOutlineDelete, AiOutlineShareAlt } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import Preview from "../preview/Preview";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from "body-scroll-lock";
 
 const Previous = () => {
   const { user } = UserAuth();
   const [question, setQuestions] = useState({});
+
+  const bodyref = useRef(null);
 
   const [Dialog, setDialog] = useState({
     bool: false,
@@ -31,6 +38,11 @@ const Previous = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if(Dialog.bool) disableBodyScroll(bodyref);
+    else enableBodyScroll(bodyref);
+  },[Dialog.bool])
 
   const handleDelete = async (id) => {
     const question = doc(db, "questions", id);
@@ -57,8 +69,10 @@ const Previous = () => {
   };
 
   return (
-    <div>
-      { Dialog.bool && <Preview questions={Dialog.questions_data} setDialog={setDialog} />}
+    <div ref={bodyref}>
+      {Dialog.bool && (
+        <Preview questions={Dialog.questions_data} setDialog={setDialog} />
+      )}
       <div className=" flex flex-col gap-4">
         {!isObjectEmpty(question) &&
           question.map((items, k) => {
