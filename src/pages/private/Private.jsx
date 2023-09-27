@@ -32,14 +32,14 @@ const Private = () => {
         question.map((doc) => {
           return (
             <>
-              <h1 className=" text-2xl text-white">{doc.data.title}</h1>
+              <h1 className=" md:text-2xl text-white">{doc.data.title}</h1>
               {doc.data.question.map((item, i) => {
                 return (
                   <div
                     key={item.key}
-                    className=" text-white w-[60vw] md:w-[40vw] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4"
+                    className=" text-base sm:text-lg md:text-xl text-white w-[90vw] sm:w-[70vw] md:max-w-[60vh] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4"
                   >
-                    <div>
+                    <div className=" break-words">
                       <span>Q{i + 1}) </span>
                       {item.data.question}
                     </div>
@@ -58,6 +58,11 @@ const Private = () => {
                   </div>
                 );
               })}
+              <button
+                className={` shadow w-[80vw] md:w-[40vw] rounded-md text-center hover:bg-green-800 text-white p-2 bg-green-700 `}
+              >
+                Preview & Save
+              </button>
             </>
           );
         })
