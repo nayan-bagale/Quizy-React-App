@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import GetAnsFromUser from "../../Components/Private/GetAnsFromUser";
+import GetUserInfo from "../../Components/Private/GetUserInfo";
 
 const Private = () => {
   let { id } = useParams();
   const [question, setQuestions] = useState([]);
+  const [bool, setBool] = useState(false);
 
   const userCollectionRef = collection(db, "questions");
 
@@ -28,45 +31,11 @@ const Private = () => {
         <div className=" flex items-center justify-center h-screen">
           <div className=" text-3xl text-white ">Not Found</div>
         </div>
-      ) : (
-        question.map((doc) => {
-          return (
-            <>
-              <h1 className=" md:text-2xl text-white">{doc.data.title}</h1>
-              {doc.data.question.map((item, i) => {
-                return (
-                  <div
-                    key={item.key}
-                    className=" text-base sm:text-lg md:text-xl text-white w-[90vw] sm:w-[70vw] md:max-w-[60vh] p-6 border bg-zinc-800/90 rounded-lg flex flex-col gap-4"
-                  >
-                    <div className=" break-words">
-                      <span>Q{i + 1}) </span>
-                      {item.data.question}
-                    </div>
-                    <div className=" flex flex-col gap-2">
-                      {item.data.options.map((option) => {
-                        return (
-                          <li
-                            key={option.key}
-                            className=" list-decimal p-1 rounded hover:bg-zinc-900 "
-                          >
-                            {option.value}
-                          </li>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-              <button
-                className={` shadow w-[80vw] md:w-[40vw] rounded-md text-center hover:bg-green-800 text-white p-2 bg-green-700 `}
-              >
-                Preview & Save
-              </button>
-            </>
-          );
-        })
-      )}
+      ) : 
+      bool ? 
+      <GetAnsFromUser question={question} /> 
+      : <GetUserInfo setBool={setBool}/>
+      }
     </main>
   );
 };

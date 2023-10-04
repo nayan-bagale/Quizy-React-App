@@ -1,9 +1,18 @@
-import React from 'react'
-import { UserAuth } from '../ContextApi/AuthContext';
-import {IoIosArrowForward} from "react-icons/io"
+import React from "react";
+import { UserAuth } from "../ContextApi/AuthContext";
+import { IoIosArrowForward } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
+import { Collapse } from "react-collapse";
+import BasicInfo from "../Components/Profile/BasicInfo";
 
 const Profile = () => {
-  const {user} = UserAuth();
+  const { user, logOut } = UserAuth();
+
+  const handleLogOut = () => {
+    const $ = confirm('Are you sure 🥹');
+    if($) logOut();
+  }
+
   return (
     <div className=" flex flex-col items-center justify-between min-h-screen">
       <main className=" flex-1 flex flex-col w-full text-white">
@@ -24,27 +33,33 @@ const Profile = () => {
         <section className=" flex justify-center flex-col md:flex-row md:gap-4 w-full">
           <section className=" flex flex-col md:p-4 md:h-[30rem] md:w-[20rem] gap-4 ">
             <div className=" flex items-center gap-2 p-4 md:p-6 md:rounded-lg cursor-pointer bg-slate-700">
-             <span className=' md:hidden'><IoIosArrowForward/></span>  Basic Info
+              <span className=" md:hidden">
+                <IoIosArrowForward />
+              </span>{" "}
+              Basic Info
             </div>
-            <div className=" p-6 hidden md:block md:rounded-lg cursor-pointer ">.....</div>
-          </section>
-          <section className=" md:-mt-[4rem] md:hover:shadow-2xl shadow md:rounded-xl p-4 h-[20rem] md:h-[30rem] md:w-[30rem] bg-slate-800 md:border border-slate-700 transition-all duration-200 ">
-            <h1 className=" text-sm md:text-lg font-semibold">Basic Info</h1>
-            <div className=" flex justify-between gap-6 border-b p-2 mt-2">
-              <div className=' text-sm md:text-base'>Name</div>
-              <div className=" flex-1 text-md md:text-base">{user.displayName}</div>
-              <div></div>
-            </div>
-            <div className=" flex justify-between gap-6 border-b p-2 mt-2">
-              <div className=' text-sm md:text-base'>Email</div>
-              <div className=" flex-1 text-md md:text-base">{user.email}</div>
-              <div></div>
+            <div
+              className="flex p-6 px-4 items-center rounded-lg gap-2 hover:shadow hover:bg-red-600 cursor-pointer "
+              onClick={handleLogOut}
+            >
+              <FiLogOut />
+              <span>SignOut</span>
             </div>
           </section>
+          <Collapse isOpened={true}>
+            <BasicInfo user={user} />
+          </Collapse>
+          <div
+            className="flex p-2 px-4 items-center gap-2 hover:shadow hover:bg-red-600 md:hidden cursor-pointer "
+            onClick={handleLogOut}
+          >
+            <FiLogOut />
+            <span>SignOut</span>
+          </div>
         </section>
       </main>
     </div>
   );
-}
+};
 
-export default Profile
+export default Profile;

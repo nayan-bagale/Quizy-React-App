@@ -35,9 +35,9 @@ function App() {
       ],
     },
     {
-      path:"/form/:id",
-      element: <Private/>
-    }
+      path: "/form/:id",
+      element: <Private />,
+    },
   ]);
 
   return (

@@ -1,4 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   signInWithPopup,
   signOut,
@@ -20,8 +25,9 @@ export const AuthContextProvider = ({ children }) => {
 
   const logOut = () => {
     signOut(auth);
-    redirect('/');
+    redirect("/");
   };
+
 
   useEffect(() => {
     onAuthStateChanged(
@@ -31,7 +37,8 @@ export const AuthContextProvider = ({ children }) => {
       },
       [user]
     );
-  });
+  }, []);
+
 
   return (
     <AuthContext.Provider value={{ user, googleSignIn, logOut }}>

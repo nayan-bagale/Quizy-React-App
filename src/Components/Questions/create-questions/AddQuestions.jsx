@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineCheck } from "react-icons/ai";
 
 const AddQuestions = ({
@@ -19,7 +19,7 @@ const AddQuestions = ({
 
   const [isMatchAns, setIsMatchAns] = useState(true);
 
-  const Validation = () => {
+  const Validation = useCallback(() => {
     if (form.question.length < 6) {
       alert("Question length is too small.");
       return false;
@@ -41,13 +41,13 @@ const AddQuestions = ({
     }
 
     return true;
-  };
+  });
 
   useEffect(() => {
     setForm(edit);
   }, [edit]);
 
-  const handleoptionsAdd = () => {
+  const handleoptionsAdd = useCallback(() => {
     if (form.options.length >= 4) {
       console.log("limit");
       return;
@@ -59,9 +59,9 @@ const AddQuestions = ({
         options: [...prev.options, { key: prev.options.length + 1, value: "" }],
       };
     });
-  };
+  });
 
-  const handleoptionsUpdate = (e, index) => {
+  const handleoptionsUpdate = useCallback((e, index) => {
     const updatedOptions = form.options.map((item, i) => {
       if (i === index) {
         return { ...item, value: e.target.value };
@@ -73,9 +73,9 @@ const AddQuestions = ({
     setForm((prev) => {
       return { ...prev, options: updatedOptions };
     });
-  };
+  });
 
-  const handleoptionDelete = (index) => {
+  const handleoptionDelete = useCallback((index) => {
     const updatedOptions = form.options.filter((item, i) => {
       return i !== index;
     });
@@ -83,9 +83,9 @@ const AddQuestions = ({
     setForm((prev) => {
       return { ...prev, options: updatedOptions };
     });
-  };
+  });
 
-  const handleDeleteQuestion = () => {
+  const handleDeleteQuestion = useCallback(() => {
     setForm({
       question: "",
       options: [
@@ -94,9 +94,9 @@ const AddQuestions = ({
       ],
       ans: "",
     });
-  };
+  });
 
-  const handleAddQuestion = () => {
+  const handleAddQuestion = useCallback(() => {
     if (!Validation()) return;
     setQuestions((prev) => {
       return {
@@ -108,16 +108,16 @@ const AddQuestions = ({
       };
     });
     handleDeleteQuestion();
-  };
+  });
 
-  const handleAnswer = (e) => {
+  const handleAnswer = useCallback((e) => {
     setForm((prev) => {
       return { ...prev, ans: e.target.value };
     });
 
     const $ = form.options.filter((item) => item.value === e.target.value);
     setIsMatchAns($.length > 0);
-  };
+  });
 
   return (
     <>
