@@ -9,9 +9,9 @@ const Profile = () => {
   const { user, logOut } = UserAuth();
 
   const handleLogOut = () => {
-    const $ = confirm('Are you sure 🥹');
-    if($) logOut();
-  }
+    const $ = confirm("Are you sure 🥹");
+    if ($) logOut();
+  };
 
   return (
     <div className=" flex flex-col items-center justify-between min-h-screen">
@@ -39,7 +39,7 @@ const Profile = () => {
               Basic Info
             </div>
             <div
-              className="flex p-6 px-4 items-center rounded-lg gap-2 hover:shadow hover:bg-red-600 cursor-pointer "
+              className="md:flex hidden p-6 px-4 items-center rounded-lg gap-2 hover:shadow hover:bg-red-600 cursor-pointer "
               onClick={handleLogOut}
             >
               <FiLogOut />

@@ -1,9 +1,9 @@
 import ManageQuestions from "../Components/Questions/create-questions/ManageQuestions";
-import Previous from "../Components/Questions/previous-questions/Previous"
+import Previous from "../Components/Questions/previous-questions/Previous";
 import { useState } from "react";
 
 const Questions = () => {
-  const [Menu, setMenu] = useState(true);
+  const [Menu, setMenu] = useState(false);
 
   return (
     <div className=" flex flex-col justify-between min-h-screen">
@@ -21,7 +21,7 @@ const Questions = () => {
               </button>
               <button
                 className={` cursor-pointer rounded-t-xl hover:bg-gray-700 px-4 p-1 ${
-                !Menu ? "bg-gray-800" : ""
+                  !Menu ? "bg-gray-800" : ""
                 }`}
                 onClick={() => setMenu(false)}
               >

@@ -6,11 +6,7 @@ import { RWebShare } from "react-web-share";
 import { AiOutlineDelete, AiOutlineShareAlt } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import Preview from "../preview/Preview";
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-  clearAllBodyScrollLocks,
-} from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const Previous = () => {
   const { user } = UserAuth();
@@ -40,9 +36,9 @@ const Previous = () => {
   }, []);
 
   useEffect(() => {
-    if(Dialog.bool) disableBodyScroll(bodyref);
+    if (Dialog.bool) disableBodyScroll(bodyref);
     else enableBodyScroll(bodyref);
-  },[Dialog.bool])
+  }, [Dialog.bool]);
 
   const handleDelete = async (id) => {
     const question = doc(db, "questions", id);

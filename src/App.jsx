@@ -4,10 +4,9 @@ import Dashboard from "./pages/Dashboard";
 import Questions from "./pages/Questions";
 import NotFound from "./pages/NotFound";
 import { UserAuth } from "./ContextApi/AuthContext";
-import {
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { PrivateContextProvider } from "./ContextApi/PrivateContext";
+
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Layout from "./pages/Layout";
 import Private from "./pages/private/Private";
@@ -36,7 +35,12 @@ function App() {
     },
     {
       path: "/form/:id",
-      element: <Private />,
+      element: (
+        <PrivateContextProvider>
+          <Private />
+        </PrivateContextProvider>
+      ),
+      errorElement: <NotFound />,
     },
   ]);
 
