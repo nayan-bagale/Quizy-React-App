@@ -1,12 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineCheck } from "react-icons/ai";
 
-const AddQuestions = ({
-  setQuestions,
-  edit,
-  saveQuestionDB,
-  isValid,
-}) => {
+const AddQuestions = ({ setQuestions, edit, saveQuestionDB, isValid }) => {
   const [form, setForm] = useState(edit);
 
   // const isValid = totalQuestions > 0;
@@ -169,7 +164,7 @@ const AddQuestions = ({
             <AiOutlinePlus />
           </button>
         </div>
-        <div className=" flex justify-between">
+        <div className=" flex flex-col md:flex-row md:justify-between">
           <div className=" flex flex-col gap-1">
             <h3>Ans:</h3>
             <input
@@ -186,7 +181,7 @@ const AddQuestions = ({
               <p className=" text-xs text-red-600">Answer did not match.</p>
             )}
           </div>
-          <div className=" flex gap-2 md:gap-4 items-end">
+          <div className=" flex self-center md:self-auto gap-2 md:gap-4 items-end">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-full p-2 md:p-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               onClick={handleAddQuestion}

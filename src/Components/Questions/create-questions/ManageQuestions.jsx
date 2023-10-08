@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import AddForm from "./FormManage/AddForm";
 import { Collapse } from "react-collapse";
 
-const ManageQuestions = () => {
+const ManageQuestions = ({ setMenu }) => {
   const { user } = UserAuth();
 
   const [bool, setBool] = React.useState(false);
@@ -70,6 +70,8 @@ const ManageQuestions = () => {
       success: <b>Questions saved!</b>,
       error: <b>Could not save.</b>,
     });
+
+    setMenu((prev) => !prev);
   };
 
   return (

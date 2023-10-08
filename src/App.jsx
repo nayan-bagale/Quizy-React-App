@@ -10,13 +10,21 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Layout from "./pages/Layout";
 import Private from "./pages/private/Private";
+import LoaderWatch from "./Components/Loader/Watch";
+import { useState } from "react";
 
 function App() {
   const { user } = UserAuth();
+  const [isAuth, setIsAuth] = useState(false);
+
+  setTimeout(() => {
+    setIsAuth(true);
+  }, 5000);
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: user ? <Layout /> : <Auth />,
+      element: user ? <Layout /> : isAuth ? <Auth /> : <LoaderWatch />,
       errorElement: <NotFound />,
       children: [
         {

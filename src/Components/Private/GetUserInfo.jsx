@@ -11,7 +11,8 @@ const GetUserInfo = ({ setBool }) => {
   });
 
   return (
-    <div className=" text-white">
+    <div className=" flex flex-col gap-4 items-center text-white">
+      <h1>Welcome</h1>
       <DynamicForm formData={question[0].form} onSubmit={onSubmit} />
     </div>
   );

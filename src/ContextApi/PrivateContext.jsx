@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 const PrivateContext = createContext();
@@ -9,6 +9,7 @@ export const PrivateContextProvider = ({ children }) => {
   const [question, setQuestions] = useState([]);
   const [user, setUser] = useState({});
   const [ans, setAns] = useState({});
+  const navigate = useNavigate();
 
   const userCollectionRef = collection(db, "questions");
 
@@ -24,10 +25,10 @@ export const PrivateContextProvider = ({ children }) => {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(ans);
-    console.log(question);
-  }, [ans]);
+  // useEffect(() => {
+  //   console.log(ans);
+  //   console.log(question);
+  // }, [ans]);
 
   const handleAnswer = (data) => {
     const fun = (ans) => {
@@ -53,7 +54,7 @@ export const PrivateContextProvider = ({ children }) => {
 
   return (
     <PrivateContext.Provider
-      value={{ id, question, user, handleAnswer, handleUserData }}
+      value={{ id, question, user, ans, handleAnswer, handleUserData }}
     >
       {children}
     </PrivateContext.Provider>

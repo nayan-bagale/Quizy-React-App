@@ -15,12 +15,14 @@ const ManageForm = ({ formData, setFormData }) => {
   //   };
   return (
     <div
-      className={` flex flex-col gap-2 mb-2 ${formData.length && "border-b"}`}
+      className={` flex flex-col gap-2 md:gap-4 w-[80vw] md:w-[40vw] mb-2 ${
+        formData.length && "border-b"
+      }`}
     >
       <>
         {formData.map((item) => {
           return (
-            <div key={item.title} className=" flex justify-between mb-2">
+            <div key={item.title} className=" flex justify-between mb-2 px-4">
               <div className="flex gap-4 text-left w-full">
                 <div className=" flex-1">{item.title}</div>
                 <div className=" flex-1">{item.type}</div>

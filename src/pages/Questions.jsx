@@ -30,7 +30,7 @@ const Questions = () => {
             </div>
           </nav>
           <div className=" flex flex-col w-full gap-4 bg-gray-800 md:rounded-xl justify-center p-8 items-center">
-            {!Menu ? <Previous /> : <ManageQuestions />}
+            {!Menu ? <Previous /> : <ManageQuestions setMenu={setMenu} />}
           </div>
         </div>
       </main>
