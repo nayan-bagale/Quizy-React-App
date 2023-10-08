@@ -11,7 +11,7 @@ const ThankYou = () => {
   let arr = Object.keys(ans.ans);
 
   return (
-    <div className=" text-white flex flex-col items-center justify-center h-screen gap-6">
+    <div className=" text-white flex flex-col items-center justify-center h-[90vh] gap-6">
       <div className=" flex flex-col gap-4 border border-gray-700 p-4 rounded shadow bg-gray-800">
         <h1>
           <span className="text-gray-400">Thank you</span> 🤩 {ans.name}

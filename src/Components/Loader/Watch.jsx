@@ -3,7 +3,7 @@ import { Watch } from "react-loader-spinner";
 
 const LoaderWatch = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-[90vh]">
       <Watch
         height="80"
         width="80"

@@ -3,29 +3,23 @@ import GetAnsFromUser from "../../Components/Private/GetAnsFromUser";
 import GetUserInfo from "../../Components/Private/GetUserInfo";
 import { UserData } from "../../ContextApi/PrivateContext";
 import LoaderWatch from "../../Components/Loader/Watch";
+import NotFound from "../NotFound";
 
 const Private = () => {
   const { question } = UserData();
 
   const [bool, setBool] = useState(false);
   const [error, setError] = useState(true);
-  useEffect(() => {
-    console.log(question);
-  }, [question]);
 
   setTimeout(() => {
     setError(false);
-  }, 5000);
+  }, 3000);
 
   return (
     <main className=" text-2xl flex flex-col items-center justify-center gap-4 p-6">
       {question.length === 0 ? (
         <div className=" flex items-center justify-center h-screen">
-          {!error ? (
-            <div className=" text-3xl text-white ">Not Found</div>
-          ) : (
-            <LoaderWatch />
-          )}
+          {!error ? <NotFound /> : <LoaderWatch />}
         </div>
       ) : bool ? (
         <GetAnsFromUser question={question} />

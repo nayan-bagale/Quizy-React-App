@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { db } from "../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+
 const PrivateContext = createContext();
 
 export const PrivateContextProvider = ({ children }) => {
@@ -9,7 +10,6 @@ export const PrivateContextProvider = ({ children }) => {
   const [question, setQuestions] = useState([]);
   const [user, setUser] = useState({});
   const [ans, setAns] = useState({});
-  const navigate = useNavigate();
 
   const userCollectionRef = collection(db, "questions");
 
@@ -25,12 +25,12 @@ export const PrivateContextProvider = ({ children }) => {
     getData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(ans);
-  //   console.log(question);
-  // }, [ans]);
+  useEffect(() => {
+    console.log(ans);
+    console.log(question);
+  }, [ans]);
 
-  const handleAnswer = (data) => {
+  const handleAnswer = async (data) => {
     const fun = (ans) => {
       const keys = Object.keys(ans?.ans);
       let Qlen = question[0].data.question.length;
@@ -45,7 +45,26 @@ export const PrivateContextProvider = ({ children }) => {
       }
       return count;
     };
-    setAns({ ...data, score: fun(data) });
+    setAns({
+      ...data,
+      score: fun(data),
+      qid: question[0].qid,
+      uid: question[0].uid,
+      qtitle: question[0].data.title,
+    });
+
+    try {
+      const docRef = await addDoc(collection(db, "attempted"), {
+        ...data,
+        score: fun(data),
+        qid: question[0].qid,
+        uid: question[0].uid,
+        qtitle: question[0].data.title,
+      });
+      console.log(docRef.id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUserData = (data) => {
