@@ -48,6 +48,11 @@ const ManageQuestions = ({ setMenu }) => {
       return { ...prev, title: e.target.value };
     });
   };
+  const handleDes = (e) => {
+    setQuestions((prev) => {
+      return { ...prev, description: e.target.value };
+    });
+  };
 
   const userCollectionRef = collection(db, "questions");
 
@@ -83,7 +88,7 @@ const ManageQuestions = ({ setMenu }) => {
       </div>
       <Collapse isOpened={bool}>
         <div className=" flex gap-1 flex-col">
-          <div className=" shadow w-[80vw] md:w-[40vw] flex flex-col items-center text-xl text-white border rounded bg-slate-800 border-slate-700 p-2">
+          <div className=" shadow w-[80vw] md:w-[40vw] px-4 flex flex-col gap-2 text-xl text-white border rounded bg-slate-800 border-slate-700 p-2">
             <label htmlFor="title">Title</label>
             <input
               className=" bg-transparent border rounded px-1 md:max-w-[80%] "
@@ -91,6 +96,16 @@ const ManageQuestions = ({ setMenu }) => {
               name="title"
               placeholder=" Title"
               onChange={handleTitle}
+            />
+            <label htmlFor="title">Description</label>
+            <textarea
+              className=" bg-transparent border rounded px-1 md:max-w-[80%] "
+              type="textbox"
+              name="description"
+              placeholder="Description"
+              rows="4"
+              cols="35"
+              onChange={handleDes}
             />
           </div>
           <>

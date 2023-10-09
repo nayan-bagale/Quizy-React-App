@@ -8,7 +8,7 @@ const Card = ({ item, i, setAns, ans }) => {
     <fieldset
       key={`${item.key}-group`}
       id={`${item.key}-group`}
-      className=" text-base sm:text-lg md:text-xl text-white w-[90vw] sm:w-[70vw] md:max-w-[60vh] p-6 border bg-gray-800/90 rounded-lg flex flex-col gap-4"
+      className=" text-base sm:text-lg md:text-xl text-white w-[90vw] sm:w-[70vw] md:max-w-[60vh] p-6 border border-slate-800 bg-slate-900 shadow md:shadow-md rounded-lg flex flex-col gap-4"
     >
       <h1 className=" break-words">
         <span>Q{i + 1}) </span>
@@ -16,11 +16,11 @@ const Card = ({ item, i, setAns, ans }) => {
       </h1>
 
       <div className="flex flex-col gap-1 ml-4">
-        {item.data.options.map((option) => {
+        {item.data.options.map((option, index) => {
           return (
             <div
-              className={`flex justify-between gap-1 rounded hover:bg-gray-600 p-1 ${
-                ans[item.key] === option.value ? "bg-gray-700" : ""
+              className={`flex justify-between gap-1 border border-slate-700 rounded p-1 ${
+                ans[item.key] === option.value ? "bg-slate-700" : ""
               }`}
             >
               <label
@@ -28,7 +28,7 @@ const Card = ({ item, i, setAns, ans }) => {
                 className="w-full px-4 cursor-pointer"
                 onClick={() => handleClick(item, option)}
               >
-                {option.value}
+                {index + 1}) {option.value}
               </label>
             </div>
           );

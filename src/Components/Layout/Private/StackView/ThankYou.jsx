@@ -1,5 +1,6 @@
 import React from "react";
 import { UserData } from "../../../../ContextApi/PrivateContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const ThankYou = () => {
   const { ans } = UserData();
@@ -9,6 +10,8 @@ const ThankYou = () => {
   };
 
   let arr = Object.keys(ans.ans);
+
+  toast.success("Submitted");
 
   return (
     <div className=" text-white flex flex-col items-center justify-center h-[90vh] gap-6">
@@ -27,6 +30,7 @@ const ThankYou = () => {
       >
         Home
       </button>
+      <Toaster />
     </div>
   );
 };

@@ -60,6 +60,7 @@ export const PrivateContextProvider = ({ children }) => {
         qid: question[0].qid,
         uid: question[0].uid,
         qtitle: question[0].data.title,
+        qdes: question[0].data.description || "",
       });
       console.log(docRef.id);
     } catch (error) {

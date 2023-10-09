@@ -21,6 +21,12 @@ const AddForm = ({ formData, setFormData }) => {
         title: "Email",
         required: true,
       },
+      // {
+      //   name: "branch",
+      //   type: "select",
+      //   title: "Branch",
+      //   options: ["CSE", "Civil", "Mech", "ECE"],
+      // },
     ]);
   }, []);
 
@@ -51,10 +57,7 @@ const AddForm = ({ formData, setFormData }) => {
       <div className="border-b w-full"></div>
       <Collapse isOpened={bool}>
         <ManageForm formData={formData} setFormData={setFormData} />
-        <form
-          onSubmit={handleSubmit}
-          className=" flex gap-2 flex-col md:flex-row p-4 "
-        >
+        <form onSubmit={handleSubmit} className=" flex gap-2 flex-col p-4 ">
           <div className=" flex gap-2 md:flex-row flex-col ">
             <input
               type="text"
@@ -74,6 +77,9 @@ const AddForm = ({ formData, setFormData }) => {
               <option value="number" className=" text-black">
                 Number
               </option>
+              <option value="email" className=" text-black">
+                Email
+              </option>
             </select>
           </div>
           <div className=" flex gap-2 md:flex-row flex-col justify-between">
@@ -81,7 +87,10 @@ const AddForm = ({ formData, setFormData }) => {
               <label htmlFor="required">Required</label>
               <input name="required" id="required" type="checkbox" />
             </div>
-            <button type="submit" className="text-2xl self-center ">
+            <button
+              type="submit"
+              className="focus:outline-none flex md:w-20 items-center justify-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl py-1.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            >
               <AiOutlinePlusSquare />
             </button>
           </div>
