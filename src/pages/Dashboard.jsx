@@ -4,7 +4,7 @@ import DashCard from "../Components/Dashboard/DashCard";
 
 const Dashboard = () => {
   return (
-    <main className=" flex flex-col gap-4 my-4 w-full h-[80vh] text-white text-3xl">
+    <main className=" flex flex-col gap-4 my-4 w-full min-h-[80vh] text-white text-3xl">
       <DashCard />
     </main>
   );

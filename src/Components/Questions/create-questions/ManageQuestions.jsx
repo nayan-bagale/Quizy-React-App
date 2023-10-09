@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AddQuestions from "./AddQuestions";
-import { AiOutlineDelete, AiOutlineSave } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";

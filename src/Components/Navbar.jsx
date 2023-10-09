@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { UserAuth } from "../ContextApi/AuthContext";
 
 const Navbar = () => {
-
   const { user, logOut } = UserAuth();
 
   const [isopen, setIsopen] = useState(false);
@@ -116,7 +115,12 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </div>
-      <div></div>
+      <div
+        className="text-2xl bold mr-4 italic text-gray-400 hover:text-white"
+        title="Virtual Classroom Beta"
+      >
+        VC Beta
+      </div>
     </div>
   );
 };

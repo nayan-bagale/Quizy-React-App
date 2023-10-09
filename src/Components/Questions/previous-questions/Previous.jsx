@@ -62,6 +62,7 @@ const Previous = () => {
       questions_data: data[0].data,
       bool: true,
     }));
+    console.log(question);
   };
 
   return (
@@ -87,9 +88,9 @@ const Previous = () => {
                   <div className=" flex gap-2 items-end">
                     <RWebShare
                       data={{
-                        text: "Questions",
+                        text: items.data.title,
                         url: `${location}/form/${items.qid}`,
-                        title: "Question",
+                        title: items.data.title,
                       }}
                       onClick={handleShare}
                     >
