@@ -1,10 +1,12 @@
 import { useState } from "react";
 import DialogBackgrond from "../Layout/Dialog/DialogBackgrond";
 import { Collapse } from "react-collapse";
+import { AiOutlineDelete } from "react-icons/ai";
 
-const DashCardPreview = ({ setIsDialogOpen, userdata }) => {
+const DashCardPreview = ({ setIsDialogOpen, userdata, handleDelete }) => {
   const keys = Object.keys(userdata.ans);
   const [bool, setBool] = useState(false);
+
   return (
     <DialogBackgrond setIsDialogOpen={setIsDialogOpen}>
       <div className=" flex flex-col gap-4">
@@ -43,6 +45,12 @@ const DashCardPreview = ({ setIsDialogOpen, userdata }) => {
             </div>
           </Collapse>
         </div>
+        <button
+          className=" self-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-xl p-2.5 px-6 md:px-12 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+          onClick={() => handleDelete(userdata.id)}
+        >
+          <AiOutlineDelete />
+        </button>
       </div>
     </DialogBackgrond>
   );

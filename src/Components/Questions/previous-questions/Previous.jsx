@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { UserAuth } from "../../../ContextApi/AuthContext";
 import { db } from "../../../firebase/firebase";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
-import { RWebShare } from "react-web-share";
-import { AiOutlineDelete, AiOutlineShareAlt } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import Preview from "../preview/Preview";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
@@ -20,8 +18,6 @@ const Previous = () => {
   });
 
   const userCollectionRef = collection(db, "questions");
-
-  const location = window.location.origin;
 
   const getData = async () => {
     const data = await getDocs(userCollectionRef);
@@ -41,14 +37,12 @@ const Previous = () => {
   }, [Dialog.bool]);
 
   const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this question?")) return;
     const question = doc(db, "questions", id);
     await deleteDoc(question);
     getData();
+    setDialog((prev) => ({ ...prev, bool: false }));
     toast.success("Deleted successfully!!!");
-  };
-
-  const handleShare = () => {
-    toast.success("shared successfully!");
   };
 
   const isObjectEmpty = (objectName) => {
@@ -59,16 +53,20 @@ const Previous = () => {
     const data = question.filter((item) => item.id === id);
     setDialog((prev) => ({
       ...prev,
-      questions_data: data[0].data,
+      questions_data: data[0],
       bool: true,
     }));
-    console.log(question);
+    console.log(data);
   };
 
   return (
     <div ref={bodyref}>
       {Dialog.bool && (
-        <Preview questions={Dialog.questions_data} setDialog={setDialog} />
+        <Preview
+          questions={Dialog.questions_data}
+          handleDelete={handleDelete}
+          setDialog={setDialog}
+        />
       )}
       <div className=" flex flex-col gap-4">
         {!isObjectEmpty(question) &&
@@ -76,35 +74,13 @@ const Previous = () => {
             return (
               <div
                 key={k}
-                className="  text-white border rounded border-slate-700 p-4 bg-slate-800 w-[80vw] md:w-[40vw] hover:shadow"
+                className="  text-white border rounded cursor-pointer border-slate-700 p-4 bg-slate-800 w-[80vw] md:w-[40vw] hover:shadow"
+                onClick={() => handlepreview(items.id)}
               >
                 <div className="break-words relative flex justify-between items-center gap-2">
-                  <h1
-                    className=" text-xl cursor-pointer"
-                    onClick={() => handlepreview(items.id)}
-                  >
+                  <h1 className=" text-xl cursor-pointer">
                     {items.data.title}
                   </h1>
-                  <div className=" flex gap-2 items-end">
-                    <RWebShare
-                      data={{
-                        text: items.data.title,
-                        url: `${location}/form/${items.qid}`,
-                        title: items.data.title,
-                      }}
-                      onClick={handleShare}
-                    >
-                      <button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-full p-2.5  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                        <AiOutlineShareAlt />
-                      </button>
-                    </RWebShare>
-                    <button
-                      className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full p-2.5  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                      onClick={() => handleDelete(items.id)}
-                    >
-                      <AiOutlineDelete />
-                    </button>
-                  </div>
                 </div>
                 <div className=" text-sm px-2">
                   <p>

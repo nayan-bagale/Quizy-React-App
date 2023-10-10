@@ -1,11 +1,22 @@
 import { useRef, useEffect } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import toast from "react-hot-toast";
+import {
+  AiOutlineClose,
+  AiOutlineDelete,
+  AiOutlineShareAlt,
+} from "react-icons/ai";
+import { RWebShare } from "react-web-share";
 
-const Preview = ({ questions, setDialog }) => {
+const Preview = ({ questions, setDialog, handleDelete }) => {
   const ref = useRef(null);
+  const location = window.location.origin;
 
   const handleClose = () => {
     setDialog((prev) => ({ ...prev, bool: false }));
+  };
+
+  const handleShare = () => {
+    toast.success("shared successfully!");
   };
 
   useEffect(() => {
@@ -24,18 +35,21 @@ const Preview = ({ questions, setDialog }) => {
     <div className=" flex justify-center items-center fixed h-screen w-full bg-black/80 z-10 top-0 right-0">
       <div
         ref={ref}
-        className=" relative flex flex-col h-[80%] items-center p-4 gap-4 text-xl text-white w-full md:w-[40vw] bg-gray-800 md:rounded-xl"
+        className=" relative flex flex-col h-[80%] justify-evenly items-center p-4 gap-4 text-xl text-white w-full md:w-[40vw] bg-gray-800 md:rounded-xl"
       >
-        <h1 className=" text-2xl">{questions.title}</h1>
+        <div className=" flex flex-col gap-2">
+          <h1 className=" text-2xl">{questions.data.title}</h1>
+          <p>{questions.data.description || ""}</p>
+        </div>
         <button className=" absolute right-4 top-4" onClick={handleClose}>
           <AiOutlineClose />
         </button>
-        <div className=" flex flex-col w-full items-center gap-4 overflow-y-auto">
-          {questions.question.map((item, i) => {
+        <div className=" flex flex-col w-full items-center py-4 gap-4 overflow-y-auto border-y border-slate-700">
+          {questions.data.question.map((item, i) => {
             return (
               <div
                 key={item.key}
-                className=" shadow break-words relative flex flex-col gap-2 text-white border rounded border-slate-700 p-4 bg-slate-800 w-[80vw] md:w-[80%]"
+                className=" break-words relative flex flex-col gap-2 text-white border rounded border-slate-700 p-4 bg-slate-700 w-[80vw] md:w-[80%]"
               >
                 <h1>
                   <span>Q{i + 1}. </span>
@@ -54,6 +68,27 @@ const Preview = ({ questions, setDialog }) => {
               </div>
             );
           })}
+        </div>
+        <div className=" flex gap-2 w-full justify-evenly items-center">
+          <RWebShare
+            data={{
+              text: questions.data.title,
+              url: `${location}/form/${questions.qid}`,
+              title: questions.data.title,
+            }}
+            onClick={handleShare}
+          >
+            <button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-xl p-2.5 px-6 md:px-12 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+              <AiOutlineShareAlt />
+            </button>
+          </RWebShare>
+
+          <button
+            className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-xl p-2.5 px-6 md:px-12 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            onClick={() => handleDelete(questions.id)}
+          >
+            <AiOutlineDelete />
+          </button>
         </div>
       </div>
     </div>

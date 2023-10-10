@@ -1,16 +1,24 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { collection, getDocs, addDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import { UserAuth } from "../../ContextApi/AuthContext";
+import React, { useEffect, useState } from "react";
 import DashCardPreview from "./DashCardPreview";
+import toast from "react-hot-toast";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 const DashCard = ({ quesAttemted }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [userdata, setUserdata] = useState({});
 
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this question?")) return;
+    // const question = doc(db, "attempted", id);
+    // await deleteDoc(question);
+    setIsDialogOpen(false);
+    toast.error("failed to delete");
+  };
+
   const handleClick = (index) => {
     setIsDialogOpen(true);
-    const { id, uid, qid, ...data } = quesAttemted[index];
+    const { uid, qid, ...data } = quesAttemted[index];
     console.log(data);
     setUserdata({ ...data });
   };
@@ -41,6 +49,7 @@ const DashCard = ({ quesAttemted }) => {
         <DashCardPreview
           userdata={userdata}
           setIsDialogOpen={setIsDialogOpen}
+          handleDelete={handleDelete}
         />
       )}
     </>
