@@ -19,13 +19,13 @@ const DashCard = ({ quesAttemted }) => {
   const handleClick = (index) => {
     setIsDialogOpen(true);
     const { uid, qid, ...data } = quesAttemted[index];
-    console.log(data);
+    // console.log(data);
     setUserdata({ ...data });
   };
 
-  useEffect(() => {
-    console.log(quesAttemted);
-  }, [quesAttemted]);
+  // useEffect(() => {
+  //   console.log(quesAttemted);
+  // }, [quesAttemted]);
 
   return (
     <>

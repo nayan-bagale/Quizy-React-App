@@ -41,7 +41,7 @@ const Previous = () => {
       questions_data: data[0],
       bool: true,
     }));
-    console.log(data);
+    // console.log(data);
   };
 
   return (

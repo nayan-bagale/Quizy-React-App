@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
+import notify from "../API/notify";
 
 const PrivateContext = createContext();
 
@@ -25,10 +26,10 @@ export const PrivateContextProvider = ({ children }) => {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(ans);
-    console.log(question);
-  }, [ans, question]);
+  // useEffect(() => {
+  //   console.log(ans);
+  //   console.log(question);
+  // }, [ans, question]);
 
   const getNotify = async () => {
     const data = await getDocs(collection(db, "notify"));
@@ -65,6 +66,7 @@ export const PrivateContextProvider = ({ children }) => {
       uid: question[0].uid,
       qtitle: question[0].data.title,
     });
+    notifyDevices(fun(data), data.name);
 
     try {
       const docRef = await addDoc(collection(db, "attempted"), {
@@ -81,6 +83,19 @@ export const PrivateContextProvider = ({ children }) => {
     }
   };
 
+  async function notifyDevices(score, name) {
+    if (score === undefined || name === undefined) return;
+
+    const { isNotified, deviceToken } = await getNotify();
+    if (isNotified) {
+      const data = {
+        title: question[0].data.title,
+        body: `${name} Got ${score} out of ${question[0].data.question.length} `,
+      };
+      notify(deviceToken, data);
+    }
+  }
+
   const handleUserData = (data) => {
     setUser(data);
   };
@@ -95,6 +110,7 @@ export const PrivateContextProvider = ({ children }) => {
         getNotify,
         handleAnswer,
         handleUserData,
+        notifyDevices,
       }}
     >
       {children}

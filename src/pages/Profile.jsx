@@ -50,7 +50,7 @@ const Profile = () => {
             <BasicInfo user={user} />
           </Collapse>
           <div
-            className="flex p-2 px-4 items-center gap-2 hover:shadow hover:bg-red-600 md:hidden cursor-pointer "
+            className="flex p-2 px-4 items-center gap-2 hover:shadow bg-red-600 hover:bg-red-700 md:hidden cursor-pointer "
             onClick={handleLogOut}
           >
             <FiLogOut />

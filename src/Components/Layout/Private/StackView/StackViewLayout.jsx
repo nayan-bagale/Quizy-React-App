@@ -3,11 +3,10 @@ import Card from "./Card";
 import { UserData } from "../../../../ContextApi/PrivateContext";
 import ThankYou from "./ThankYou";
 import toast, { Toaster } from "react-hot-toast";
-import notify from "../../../../API/notify";
 
 const StackViewLayout = ({ question }) => {
   const [ans, setAns] = useState({});
-  const { handleAnswer, user, getNotify } = UserData();
+  const { handleAnswer, user, notifyDevices } = UserData();
 
   const [bool, setBool] = useState(false);
 
@@ -30,19 +29,12 @@ const StackViewLayout = ({ question }) => {
       return;
     }
     handleAnswer({ ...user, ans: { ...ans }, timestamp: currentDate() });
+    notifyDevices();
     setBool(() => true);
   });
 
-  const handlenotify = async () => {
-    const obj = await getNotify();
-    if (obj.isNotified) notify(obj.deviceToken);
-  };
-
   return !bool ? (
     <div className="text-white flex flex-col gap-4">
-      <button onClick={handlenotify} className=" border">
-        notify
-      </button>
       <h1 className=" md:text-3xl self-center ">{user.name}</h1>
       <h1 className=" md:text-2xl ">{question[0].data.title}</h1>
       <p className=" text-base md:text-xl text-slate-400">

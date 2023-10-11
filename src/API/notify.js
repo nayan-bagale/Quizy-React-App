@@ -1,15 +1,12 @@
 import axios from "axios";
 
-const notify = (token) => {
+const notify = (token, data) => {
   axios
-    .post(
-      import.meta.env.VITE_NOTIFY_URL || "http://localhost:5000/api/notify",
-      {
-        title: "Fred",
-        body: "Flintstone",
-        token: token,
-      }
-    )
+    .post(import.meta.env.VITE_NOTIFY_URL, {
+      title: data.title,
+      body: data.body,
+      tokens: token,
+    })
     .then(function (response) {
       console.log(response);
     })
