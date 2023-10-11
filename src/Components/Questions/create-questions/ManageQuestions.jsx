@@ -11,7 +11,7 @@ import AddForm from "./FormManage/AddForm";
 import { Collapse } from "react-collapse";
 
 const ManageQuestions = ({ setMenu }) => {
-  const { user } = UserAuth();
+  const { user, requestPermission } = UserAuth();
 
   const [bool, setBool] = React.useState(false);
 
@@ -56,6 +56,11 @@ const ManageQuestions = ({ setMenu }) => {
 
   const userCollectionRef = collection(db, "questions");
 
+  const notify = () => {
+    const data = requestPermission();
+    console.log(data);
+  };
+
   const saveQuestionDB = async () => {
     if (questions.question < 1) {
       toast.error("At least two questions required!");
@@ -69,6 +74,7 @@ const ManageQuestions = ({ setMenu }) => {
       qid: uuidv4(),
       form: formData,
     };
+    notify();
 
     toast.promise(addDoc(userCollectionRef, { ...questionDataDB }), {
       loading: "Saving...",

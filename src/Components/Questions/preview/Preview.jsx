@@ -1,18 +1,45 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import {
   AiOutlineClose,
   AiOutlineDelete,
   AiOutlineShareAlt,
 } from "react-icons/ai";
+import {
+  MdOutlineNotificationsActive,
+  MdOutlineNotificationsOff,
+} from "react-icons/md";
 import { RWebShare } from "react-web-share";
+import { UserAuth } from "../../../ContextApi/AuthContext";
 
 const Preview = ({ questions, setDialog, handleDelete }) => {
   const ref = useRef(null);
   const location = window.location.origin;
 
+  const { requestPermission, notification } = UserAuth();
+
+  const [isNotified, setIsNotified] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const handleClose = () => {
     setDialog((prev) => ({ ...prev, bool: false }));
+  };
+
+  const handleNotify = async () => {
+    const token = await requestPermission();
+    if (token) {
+      setIsNotified(!isNotified);
+      notification(questions.qid, token, !isNotified);
+
+      if (!isNotified) {
+        toast.success("Notification On.");
+      } else {
+        toast.success("Notification Off.");
+      }
+    } else {
+      setIsDisabled(true);
+      toast.error("Notification permission denied.");
+    }
   };
 
   const handleShare = () => {
@@ -70,6 +97,22 @@ const Preview = ({ questions, setDialog, handleDelete }) => {
           })}
         </div>
         <div className=" flex gap-2 w-full justify-evenly items-center">
+          <button
+            onClick={handleNotify}
+            disabled={isDisabled}
+            className={`focus:outline-none text-white focus:ring-4 focus:ring-purple-300 font-medium rounded-lg px-6 md:px-12 py-2.5 dark:focus:ring-purple-900 
+            ${
+              isDisabled
+                ? "cursor-not-allowed bg-purple-800/50 "
+                : "hover:bg-purple-800 bg-purple-700"
+            }`}
+          >
+            {isNotified ? (
+              <MdOutlineNotificationsActive />
+            ) : (
+              <MdOutlineNotificationsOff />
+            )}
+          </button>
           <RWebShare
             data={{
               text: questions.data.title,

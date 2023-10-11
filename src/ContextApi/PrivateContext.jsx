@@ -28,7 +28,20 @@ export const PrivateContextProvider = ({ children }) => {
   useEffect(() => {
     console.log(ans);
     console.log(question);
-  }, [ans]);
+  }, [ans, question]);
+
+  const getNotify = async () => {
+    const data = await getDocs(collection(db, "notify"));
+    const token = data.docs
+      .map((doc) => ({ ...doc.data(), id: doc.id }))
+      .filter(
+        (item) => item.uid === question[0].uid && item.qid === question[0].qid
+      );
+    return {
+      deviceToken: token[0].deviceToken,
+      isNotified: token[0].isNotified,
+    };
+  };
 
   const handleAnswer = async (data) => {
     const fun = (ans) => {
@@ -74,7 +87,15 @@ export const PrivateContextProvider = ({ children }) => {
 
   return (
     <PrivateContext.Provider
-      value={{ id, question, user, ans, handleAnswer, handleUserData }}
+      value={{
+        id,
+        question,
+        user,
+        ans,
+        getNotify,
+        handleAnswer,
+        handleUserData,
+      }}
     >
       {children}
     </PrivateContext.Provider>

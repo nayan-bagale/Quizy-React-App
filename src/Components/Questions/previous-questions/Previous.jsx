@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { UserAuth } from "../../../ContextApi/AuthContext";
 import { db } from "../../../firebase/firebase";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import Preview from "../preview/Preview";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const Previous = () => {
-  const { user } = UserAuth();
-  const [question, setQuestions] = useState({});
+  const { question } = UserAuth();
 
   const bodyref = useRef(null);
 
@@ -17,33 +16,19 @@ const Previous = () => {
     questions_data: "",
   });
 
-  const userCollectionRef = collection(db, "questions");
-
-  const getData = async () => {
-    const data = await getDocs(userCollectionRef);
-    setQuestions(
-      data.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .filter((doc) => doc.uid === user.uid)
-    );
-  };
-  useEffect(() => {
-    getData();
-  }, []);
-
   useEffect(() => {
     if (Dialog.bool) disableBodyScroll(bodyref);
     else enableBodyScroll(bodyref);
   }, [Dialog.bool]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = useCallback(async (id) => {
     if (!confirm("Are you sure you want to delete this question?")) return;
     const question = doc(db, "questions", id);
     await deleteDoc(question);
     getData();
     setDialog((prev) => ({ ...prev, bool: false }));
     toast.success("Deleted successfully!!!");
-  };
+  });
 
   const isObjectEmpty = (objectName) => {
     return Object.keys(objectName).length === 0;
