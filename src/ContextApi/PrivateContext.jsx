@@ -92,6 +92,7 @@ export const PrivateContextProvider = ({ children }) => {
         title: question[0].data.title,
         body: `${name} Got ${score} out of ${question[0].data.question.length} `,
       };
+      console.log(data);
       notify(deviceToken, data);
     }
   }

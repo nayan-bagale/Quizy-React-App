@@ -3,6 +3,7 @@ import { UserData } from "../../../../ContextApi/PrivateContext";
 
 const ThankYou = () => {
   const { ans } = UserData();
+  const arr = Object.keys(ans?.ans);
 
   const handleClick = () => {
     window.location.href = "/";
