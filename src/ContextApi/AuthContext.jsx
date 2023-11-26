@@ -114,6 +114,10 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const fetchQuestionAttempted = async () => {
+    getData(setQuesAttempted, attemptedCollectionRef);
+  };
+
   useEffect(() => {
     getData(setQuesAttempted, attemptedCollectionRef);
     getData(setQuestions, userCollectionRef);
@@ -129,6 +133,7 @@ export const AuthContextProvider = ({ children }) => {
         question,
         requestPermission,
         notification,
+        fetchQuestionAttempted,
       }}
     >
       {children}

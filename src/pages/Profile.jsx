@@ -14,7 +14,7 @@ const Profile = () => {
   };
 
   return (
-    <div className=" flex flex-col items-center justify-between min-h-screen">
+    <div className=" flex flex-col items-center justify-between md:min-h-screen ">
       <main className=" flex-1 flex flex-col w-full text-white">
         <section className=" flex bg-gradient-to-r from-slate-900 to-slate-700 w-full py-8 md:py-0 md:h-[20rem] justify-center md:justify-start items-center">
           <div className=" w-[60%] md:-mt-[5rem] flex flex-col md:flex-row justify-center gap-4 md:gap-24 items-center ">

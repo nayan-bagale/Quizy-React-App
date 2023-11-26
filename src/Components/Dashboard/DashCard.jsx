@@ -4,16 +4,17 @@ import toast from "react-hot-toast";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
-const DashCard = ({ quesAttemted }) => {
+const DashCard = ({ quesAttemted, fetchQuestionAttempted }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [userdata, setUserdata] = useState({});
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this question?")) return;
-    // const question = doc(db, "attempted", id);
-    // await deleteDoc(question);
+    const question = doc(db, "attempted", id);
+    await deleteDoc(question);
+    fetchQuestionAttempted();
     setIsDialogOpen(false);
-    toast.error("failed to delete");
+    toast.success("failed to delete");
   };
 
   const handleClick = (index) => {

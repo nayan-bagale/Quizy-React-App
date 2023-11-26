@@ -116,10 +116,10 @@ const Navbar = () => {
         </AnimatePresence>
       </div>
       <div
-        className="text-2xl bold mr-4 italic text-gray-400 hover:text-white"
-        title="Virtual Classroom Beta"
+        className="text-2xl bold mr-4 italic bg-gradient-to-r from-teal-200 to-teal-500 bg-clip-text text-transparent"
+        title="Quizy"
       >
-        VC Beta
+        Quizy
       </div>
     </div>
   );
