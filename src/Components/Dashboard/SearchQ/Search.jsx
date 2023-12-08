@@ -42,7 +42,7 @@ const Search = ({ setQuestionsDisplay, quesAttemted }) => {
         />
         {search && (
           <button
-            className=" absolute top-1 md:top-2 right-10 text-yellow-400"
+            className=" absolute top-1 md:top-1 right-1 text-yellow-400"
             onClick={() => setSearch("")}
           >
             <IoIosClose />
