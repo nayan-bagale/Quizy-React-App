@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { FaGithub } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../ContextApi/AuthContext";
@@ -115,11 +116,20 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </div>
-      <div
-        className="text-2xl bold mr-4 italic bg-gradient-to-r from-teal-200 to-teal-500 bg-clip-text text-transparent"
-        title="Quizy"
-      >
-        Quizy
+      <div className=" flex items-center gap-6 mr-5">
+        <Link
+          to="/"
+          className=" hover:bg-gradient-to-r from-teal-100 to-teal-300 rounded overflow-hidden "
+        >
+          <img src="/logo1.png" alt="logo" className=" w-[5rem] " />
+        </Link>
+        <Link
+          to="https://github.com/nayan-bagale/Quizy-React-App"
+          target="_blank"
+          className=" text-4xl hover:text-stone-400"
+        >
+          <FaGithub />
+        </Link>
       </div>
     </div>
   );
